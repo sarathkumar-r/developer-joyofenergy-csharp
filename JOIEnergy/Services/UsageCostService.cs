@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JOIEnergy.Domain;
@@ -26,6 +27,10 @@ namespace JOIEnergy.Services
         {
             var pricePlanId = _accountService.GetPricePlanIdForSmartMeterId(smartMeterId);
             var pricePlan = _pricePlans.Find(p => p.PlanName == pricePlanId);
+            if (pricePlan == null)
+            {
+                throw new InvalidOperationException("Price plan not found.");
+            }
             //get readings for smart meter is and filter only for last 7 days
             var electricityReadings = _meterReadingService.GetReadings(smartMeterId);//.Where(reading => reading.Time > System.DateTime.Now.AddDays(-7)).ToList();
             //if last 7 days readings are not available return original list    
