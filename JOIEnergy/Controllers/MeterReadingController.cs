@@ -15,10 +15,14 @@ namespace JOIEnergy.Controllers
     {
         private readonly IMeterReadingService _meterReadingService;
 
-        public MeterReadingController(IMeterReadingService meterReadingService)
+        private readonly IUsageCostService _usageCostService;
+
+        public MeterReadingController(IMeterReadingService meterReadingService, IUsageCostService usageCostService)
         {
             _meterReadingService = meterReadingService;
+            _usageCostService = usageCostService;
         }
+
         // POST api/values
         [HttpPost ("store")]
         public ObjectResult Post([FromBody]MeterReadings meterReadings)
@@ -42,5 +46,15 @@ namespace JOIEnergy.Controllers
         public ObjectResult GetReading(string smartMeterId) {
             return new OkObjectResult(_meterReadingService.GetReadings(smartMeterId));
         }
+
+        //Get Method yo retrieve Smart Meter Usage Cost for each Price Plan over a week
+
+        [HttpGet("usage-cost/{smartMeterId}")]
+        
+        public ObjectResult GetWeeklyUsageCost(string smartMeterId) {
+            return new OkObjectResult(_usageCostService.CalculateWeeklyCost(smartMeterId));
+        }
+
+        //Get Method to Recommend Cheapest
     }
 }

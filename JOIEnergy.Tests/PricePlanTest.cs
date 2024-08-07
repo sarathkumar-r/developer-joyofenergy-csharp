@@ -36,13 +36,13 @@ namespace JOIEnergy.Tests
 
         [Fact]
         public void TestGetBasePrice() {
-            Assert.Equal(20m, _pricePlan.GetPrice(new DateTime(2018, 1, 2)));
+            Assert.Equal(20m, _pricePlan.GetPrice(new DateTime(2024, 8, 7)));
         }
 
         [Fact]
         public void TestGetPeakTimePrice()
         {
-            Assert.Equal(40m, _pricePlan.GetPrice(new DateTime(2018, 1, 6)));
+            Assert.Equal(40m, _pricePlan.GetPrice(new DateTime(2024, 8, 10)));
         }
 
     }

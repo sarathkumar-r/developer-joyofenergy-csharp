@@ -16,6 +16,7 @@ namespace JOIEnergy.Tests
         private MeterReadingService meterReadingService;
         private PricePlanComparatorController controller;
 
+        private CalculationService calculationService;
         private static string PRICE_PLAN_1_ID = "test-supplier";
         private static string PRICE_PLAN_2_ID = "best-supplier";
         private static string PRICE_PLAN_3_ID = "second-best-supplier";
@@ -30,7 +31,10 @@ namespace JOIEnergy.Tests
                 new PricePlan() { PlanName = PRICE_PLAN_2_ID, UnitRate = 1, PeakTimeMultiplier = NoMultipliers() },
                 new PricePlan() { PlanName = PRICE_PLAN_3_ID, UnitRate = 2, PeakTimeMultiplier = NoMultipliers() } 
             };
-            var pricePlanService = new PricePlanService(pricePlans, meterReadingService);
+
+            calculationService = new CalculationService();
+
+            var pricePlanService = new PricePlanService(pricePlans, meterReadingService,calculationService);
             var smartMeterToPricePlanAccounts = new Dictionary<string, string>
             {
                 { SMART_METER_ID, PRICE_PLAN_1_ID }

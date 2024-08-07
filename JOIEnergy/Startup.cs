@@ -51,11 +51,13 @@ namespace JOIEnergy
                     PeakTimeMultiplier = new List<PeakTimeMultiplier>()
                 }
             };
-
+            services.AddSwaggerGen();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddTransient<IAccountService, AccountService>();
             services.AddTransient<IMeterReadingService, MeterReadingService>();
             services.AddTransient<IPricePlanService, PricePlanService>();
+            services.AddTransient<IUsageCostService, UsageCostService>();
+            services.AddTransient<ICalculationService, CalculationService>();
             services.AddSingleton((IServiceProvider arg) => readings);
             services.AddSingleton((IServiceProvider arg) => pricePlans);
             services.AddSingleton((IServiceProvider arg) => SmartMeterToPricePlanAccounts);
@@ -67,6 +69,11 @@ namespace JOIEnergy
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseSwagger();
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                });
             }
 
             app.UseMvc();
