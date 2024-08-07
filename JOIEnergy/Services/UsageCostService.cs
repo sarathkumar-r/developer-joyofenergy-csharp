@@ -31,9 +31,9 @@ namespace JOIEnergy.Services
             {
                 throw new InvalidOperationException("Price plan not found.");
             }
-            //get readings for smart meter is and filter only for last 7 days
+            
             var electricityReadings = _meterReadingService.GetReadings(smartMeterId);//.Where(reading => reading.Time > System.DateTime.Now.AddDays(-7)).ToList();
-            //if last 7 days readings are not available return original list    
+ 
             if (!electricityReadings.Any())
             {
                 electricityReadings = _meterReadingService.GetReadings(smartMeterId);
